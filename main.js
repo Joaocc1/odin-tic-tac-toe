@@ -1,4 +1,4 @@
-const game = (() => {
+const gameBoard = (() => {
   let board = [
     ["", "", ""],
     ["", "", ""],
@@ -21,4 +21,32 @@ const game = (() => {
   return { getBoard, makeMove };
 })();
 
-game.getBoard();
+const players = (() => {
+  let playerOne = {};
+  let playerTwo = {};
+
+  function getPlayerOne() {
+    return playerOne;
+  }
+
+  function getPlayerTwo() {
+    return playerTwo;
+  }
+
+  function createPlayer() {
+    const name = prompt("Player 1, what's your name?");
+    return name;
+  }
+
+  return { createPlayer, getPlayerOne, getPlayerTwo };
+})();
+
+const game = (() => {
+  function displayBoard() {
+    gameBoard.getBoard();
+  }
+
+  return { displayBoard };
+})();
+
+game.displayBoard();
