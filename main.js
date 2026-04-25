@@ -1,4 +1,4 @@
-const gameBoard = (() => {
+const game = (() => {
   let board = [
     ["", "", ""],
     ["", "", ""],
@@ -21,4 +21,4 @@ const gameBoard = (() => {
   return { getBoard, makeMove };
 })();
 
-gameBoard.getBoard();
+game.getBoard();
