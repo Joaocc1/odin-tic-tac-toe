@@ -1,3 +1,4 @@
+// Store game board and related functions
 const gameBoard = (() => {
   let board = [
     ["", "", ""],
@@ -21,9 +22,10 @@ const gameBoard = (() => {
   return { getBoard, makeMove };
 })();
 
+// Store players and related functions
 const players = (() => {
-  let playerOne = {};
-  let playerTwo = {};
+  let playerOne = { name: "" };
+  let playerTwo = { name: "" };
 
   function getPlayerOne() {
     return playerOne;
@@ -33,14 +35,18 @@ const players = (() => {
     return playerTwo;
   }
 
-  function createPlayer() {
-    const name = prompt("Player 1, what's your name?");
-    return name;
+  function createPlayerOne(name) {
+    playerOne.name = name;
   }
 
-  return { createPlayer, getPlayerOne, getPlayerTwo };
+  function createPlayerTwo(name) {
+    playerTwo.name = name;
+  }
+
+  return { createPlayerOne, createPlayerTwo, getPlayerOne, getPlayerTwo };
 })();
 
+// Main function that initializes game and controls game flow
 const game = (() => {
   function displayBoard() {
     gameBoard.getBoard();
