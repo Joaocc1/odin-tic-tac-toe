@@ -35,12 +35,12 @@ const players = (() => {
     return playerTwo;
   }
 
-  function createPlayerOne(name) {
-    playerOne.name = name;
+  function createPlayerOne(playerName) {
+    playerOne.name = playerName;
   }
 
-  function createPlayerTwo(name) {
-    playerTwo.name = name;
+  function createPlayerTwo(playerName) {
+    playerTwo.name = playerName;
   }
 
   return { createPlayerOne, createPlayerTwo, getPlayerOne, getPlayerTwo };
