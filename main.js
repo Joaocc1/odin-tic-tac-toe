@@ -13,9 +13,11 @@ const gameBoard = (() => {
   function makeMove(y, x, player) {
     if (board[y][x] === "") {
       board[y][x] = player;
+      console.clear();
       getBoard();
     } else {
       console.log("Not a valid move");
+      alert("Not a valid move");
     }
   }
 
