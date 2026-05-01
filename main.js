@@ -21,7 +21,36 @@ const gameBoard = (() => {
     }
   }
 
-  return { getBoard, makeMove };
+  function winCondition(player) {
+    let id = "";
+    let win = false;
+
+    if (player === "Player One") {
+      id = "X";
+    } else {
+      id = "O";
+    }
+
+    let isWinning = false;
+
+    for (let i = 0; i < board[0].length; i++) {
+      if (board[0][i] === id) {
+        isWinning = true;
+      } else {
+        isWinning = false;
+      }
+    }
+
+    if (isWinning === true) {
+      win = true;
+    }
+
+    if (win === true) {
+      console.log("You win");
+    }
+  }
+
+  return { getBoard, makeMove, winCondition };
 })();
 
 // Store players and related functions
@@ -65,6 +94,7 @@ const game = (() => {
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 4; i++) {
       choseMove();
+      gameBoard.winCondition("Player One");
     }
   }
 
