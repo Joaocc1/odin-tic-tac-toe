@@ -24,8 +24,8 @@ const gameBoard = (() => {
 
 // Store players and related functions
 const players = (() => {
-  let playerOne = { name: "" };
-  let playerTwo = { name: "" };
+  let playerOne = { name: "", id: "X" };
+  let playerTwo = { name: "", id: "O" };
 
   function getPlayerOne() {
     return playerOne;
@@ -52,7 +52,31 @@ const game = (() => {
     gameBoard.getBoard();
   }
 
-  return { displayBoard };
+  function startGame() {
+    displayBoard();
+
+    const playerName = prompt("What's your name?");
+
+    players.createPlayerOne(playerName);
+    alert(`Hello ${playerName}!`);
+
+    // for loop to prevent infinite loop while no winning condition is implemented
+    for (let i = 0; i < 4; i++) {
+      choseMove();
+    }
+  }
+
+  function choseMove() {
+    const play = prompt(
+      "Make a move (write two numbers next to each other such as '01' or '12', the first is the line number and the second the column number",
+    );
+    gameBoard.makeMove(play[0], play[1], "X");
+
+    // write here the logic that evaluates if there's a winner
+    // then if game continues...
+  }
+
+  return { displayBoard, startGame };
 })();
 
-game.displayBoard();
+game.startGame();
