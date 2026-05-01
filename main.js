@@ -112,3 +112,8 @@ const game = (() => {
 })();
 
 game.startGame();
+
+// TODO
+//
+// continue logic for winning condition
+// right now it evaluates the top row, maybe create an inner for loop to evaluate all rows
