@@ -10,9 +10,9 @@ const gameBoard = (() => {
     console.table(board);
   }
 
-  function makeMove(y, x, player) {
-    if (board[y][x] === "") {
-      board[y][x] = player;
+  function makeMove(x, y, player) {
+    if (board[x][y] === "") {
+      board[x][y] = player;
       console.clear();
       getBoard();
     } else {
