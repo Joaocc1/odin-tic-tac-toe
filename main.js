@@ -129,5 +129,4 @@ game.playGame();
 
 // TODO
 //
-// continue logic for winning condition
-// right now it evaluates the top row, maybe create an inner for loop to evaluate all rows
+// implement logic to detect that no more plays are possible and it's a tie and with that and win condition the game loop can run normally and will always stop if either a player wins or there's no more plays possible
