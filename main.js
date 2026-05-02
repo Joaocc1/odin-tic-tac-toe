@@ -86,7 +86,7 @@ const game = (() => {
     gameBoard.getBoard();
   }
 
-  function startGame() {
+  function playGame() {
     displayBoard();
 
     const playerName = prompt("What's your name?");
@@ -115,10 +115,10 @@ const game = (() => {
     // then if game continues...
   }
 
-  return { displayBoard, startGame };
+  return { displayBoard, playGame };
 })();
 
-game.startGame();
+game.playGame();
 
 // TODO
 //
