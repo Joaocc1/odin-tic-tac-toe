@@ -30,24 +30,31 @@ const gameBoard = (() => {
       id = "O";
     }
 
-    let isWinning = 0;
-    // let counter = 0;
-
-    for (let i = 0; i < board.length; i++) {
-      for (let j = 0; j < board[i].length; j++) {
-        if (board[i][j] === id) {
-          isWinning++;
-          if (isWinning === 3) {
-            return true;
-          }
-        } else {
-          if (isWinning > 0) {
-            isWinning--;
-          }
+    // check rows and columns
+    for (let i = 0; i < 3; i++) {
+      if (board[i][0] === id) {
+        if (board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
+          return true;
         }
       }
-      // counter++;
-      // console.log(`Rounds: ${counter}`);
+      if (board[0][i] === id) {
+        if (board[0][i] === board[1][i] && board[1][i] === board[2][i]) {
+          return true;
+        }
+      }
+    }
+
+    // check diagonals
+    if (board[0][0] === id) {
+      if (board[0][0] === board[1][1] && board[1][1] === board[2][2]) {
+        return true;
+      }
+    }
+
+    if (board[0][2] === id) {
+      if (board[0][2] === board[1][1] && board[1][1] === board[2][0]) {
+        return true;
+      }
     }
 
     return false;
