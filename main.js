@@ -21,9 +21,8 @@ const gameBoard = (() => {
     }
   }
 
-  function winCondition(player) {
+  function checkWin(player) {
     let id = "";
-    let win = false;
 
     if (player === "Player One") {
       id = "X";
@@ -31,26 +30,30 @@ const gameBoard = (() => {
       id = "O";
     }
 
-    let isWinning = false;
+    let isWinning = 0;
+    // let counter = 0;
 
-    for (let i = 0; i < board[0].length; i++) {
-      if (board[0][i] === id) {
-        isWinning = true;
-      } else {
-        isWinning = false;
+    for (let i = 0; i < board.length; i++) {
+      for (let j = 0; j < board[i].length; j++) {
+        if (board[i][j] === id) {
+          isWinning++;
+          if (isWinning === 3) {
+            return true;
+          }
+        } else {
+          if (isWinning > 0) {
+            isWinning--;
+          }
+        }
       }
+      // counter++;
+      // console.log(`Rounds: ${counter}`);
     }
 
-    if (isWinning === true) {
-      win = true;
-    }
-
-    if (win === true) {
-      console.log("You win");
-    }
+    return false;
   }
 
-  return { getBoard, makeMove, winCondition };
+  return { getBoard, makeMove, checkWin };
 })();
 
 // Store players and related functions
@@ -94,7 +97,11 @@ const game = (() => {
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 4; i++) {
       choseMove();
-      gameBoard.winCondition("Player One");
+      const isWin = gameBoard.checkWin("Player One");
+
+      if (isWin === true) {
+        console.log("You win");
+      }
     }
   }
 
