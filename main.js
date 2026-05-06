@@ -21,8 +21,9 @@ const gameBoard = (() => {
     }
   }
 
-  function checkWin(player) {
+  function checkCondition(player) {
     let id = "";
+    let isBoardFull = 0;
 
     if (player === "Player One") {
       id = "X";
@@ -32,6 +33,10 @@ const gameBoard = (() => {
 
     // check rows and columns
     for (let i = 0; i < 3; i++) {
+      if (board[i][0] !== "") {
+        isBoardFull += 1;
+      }
+
       if (board[i][0] === id) {
         if (board[i][0] === board[i][1] && board[i][1] === board[i][2]) {
           return true;
@@ -57,10 +62,14 @@ const gameBoard = (() => {
       }
     }
 
-    return false;
+    if (isBoardFull === 9) {
+      return "tie";
+    } else {
+      return false;
+    }
   }
 
-  return { getBoard, makeMove, checkWin };
+  return { getBoard, makeMove, checkCondition };
 })();
 
 // Store players and related functions
@@ -102,11 +111,13 @@ const game = (() => {
     alert(`Hello ${playerName}!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 11; i++) {
       choseMove();
-      const isWin = gameBoard.checkWin("Player One");
+      const isGameOver = gameBoard.checkCondition("Player One");
 
-      if (isWin === true) {
+      if (isGameOver === "tie") {
+        console.log("It's a tie");
+      } else if (isGameOver === true) {
         console.log("You win");
       }
     }
