@@ -105,10 +105,15 @@ const game = (() => {
   function playGame() {
     displayBoard();
 
-    const playerName = prompt("What's your name?");
+    // player one prompt
+    const playerOneName = prompt("Player 1, what's your name?");
 
-    players.createPlayerOne(playerName);
-    alert(`Hello ${playerName}!`);
+    // player two prompt
+    const playerTwoName = prompt("Player 2, what's your name?");
+
+    players.createPlayerOne(playerOneName);
+    players.createPlayerTwo(playerTwoName);
+    alert(`Hello ${playerOneName}(player 1) and ${playerTwoName}(player 2)!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 11; i++) {
@@ -140,4 +145,4 @@ game.playGame();
 
 // TODO
 //
-// implement logic to detect that no more plays are possible and it's a tie and with that and win condition the game loop can run normally and will always stop if either a player wins or there's no more plays possible
+// introduce player two; it creates now figure were it's best to control the turn flow, if in the choseMove() function or outside of it
