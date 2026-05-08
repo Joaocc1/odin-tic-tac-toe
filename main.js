@@ -25,7 +25,7 @@ const gameBoard = (() => {
     let id = "";
     let isBoardFull = 0;
 
-    if (player === "Player One") {
+    if (player === "player one") {
       id = "X";
     } else {
       id = "O";
@@ -62,6 +62,8 @@ const gameBoard = (() => {
       }
     }
 
+    console.log(isBoardFull);
+
     if (isBoardFull === 9) {
       return "tie";
     } else {
@@ -76,6 +78,14 @@ const gameBoard = (() => {
 const players = (() => {
   let playerOne = { name: "", id: "X" };
   let playerTwo = { name: "", id: "O" };
+
+  function getPlayer(player) {
+    if (player === "player one") {
+      return playerOne;
+    } else if (player === "player two") {
+      return playerTwo;
+    }
+  }
 
   function getPlayerOne() {
     return playerOne;
@@ -93,7 +103,13 @@ const players = (() => {
     playerTwo.name = playerName;
   }
 
-  return { createPlayerOne, createPlayerTwo, getPlayerOne, getPlayerTwo };
+  return {
+    createPlayerOne,
+    createPlayerTwo,
+    getPlayerOne,
+    getPlayerTwo,
+    getPlayer,
+  };
 })();
 
 // Main function that initializes game and controls game flow
@@ -103,6 +119,7 @@ const game = (() => {
   }
 
   function playGame() {
+    let currentPlayer = "player one";
     displayBoard();
 
     // player one prompt
@@ -113,26 +130,39 @@ const game = (() => {
 
     players.createPlayerOne(playerOneName);
     players.createPlayerTwo(playerTwoName);
-    alert(`Hello ${playerOneName}(player 1) and ${playerTwoName}(player 2)!`);
+    alert(`Hello ${playerOneName} and ${playerTwoName}!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 11; i++) {
-      choseMove();
-      const isGameOver = gameBoard.checkCondition("Player One");
+      // make a move
+      choseMove(currentPlayer);
+
+      // check if game ends
+      const isGameOver = gameBoard.checkCondition(currentPlayer);
 
       if (isGameOver === "tie") {
         console.log("It's a tie");
       } else if (isGameOver === true) {
         console.log("You win");
       }
+
+      // change player's turn
+      if (currentPlayer === "player one") {
+        currentPlayer = "player two";
+      } else if (currentPlayer === "player two") {
+        currentPlayer = "player one";
+      }
     }
   }
 
-  function choseMove() {
+  function choseMove(player) {
+    let playerId = players.getPlayer(player).id;
+    console.log(playerId);
+
     const play = prompt(
       "Make a move (write two numbers next to each other such as '01' or '12', the first is the line number and the second the column number",
     );
-    gameBoard.makeMove(play[0], play[1], "X");
+    gameBoard.makeMove(play[0], play[1], playerId);
 
     // write here the logic that evaluates if there's a winner
     // then if game continues...
