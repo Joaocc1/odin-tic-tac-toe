@@ -33,7 +33,7 @@ const gameBoard = (() => {
 
     // check rows and columns
     for (let i = 0; i < 3; i++) {
-      if (board[i][0] !== "") {
+      if (board[i][0] !== "" && board[i][1] !== "" && board[i][2] !== "") {
         isBoardFull += 1;
       }
 
@@ -64,7 +64,7 @@ const gameBoard = (() => {
 
     console.log(isBoardFull);
 
-    if (isBoardFull === 9) {
+    if (isBoardFull === 3) {
       return "tie";
     } else {
       return false;
