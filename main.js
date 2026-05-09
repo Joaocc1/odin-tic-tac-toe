@@ -15,9 +15,11 @@ const gameBoard = (() => {
       board[x][y] = player;
       console.clear();
       getBoard();
+      return true;
     } else {
       console.log("Not a valid move");
       alert("Not a valid move");
+      return false;
     }
   }
 
@@ -114,12 +116,13 @@ const players = (() => {
 
 // Main function that initializes game and controls game flow
 const game = (() => {
+  let currentPlayer = "player one";
+
   function displayBoard() {
     gameBoard.getBoard();
   }
 
   function playGame() {
-    let currentPlayer = "player one";
     displayBoard();
 
     // player one prompt
@@ -135,22 +138,23 @@ const game = (() => {
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 11; i++) {
       // make a move
-      choseMove(currentPlayer);
+      const attemptMove = choseMove(currentPlayer);
 
-      // check if game ends
-      const isGameOver = gameBoard.checkCondition(currentPlayer);
+      if (attemptMove) {
+        // check if game ends
+        const isGameOver = gameBoard.checkCondition(currentPlayer);
 
-      if (isGameOver === "tie") {
-        console.log("It's a tie");
-      } else if (isGameOver === true) {
-        console.log("You win");
-      }
-
-      // change player's turn
-      if (currentPlayer === "player one") {
-        currentPlayer = "player two";
-      } else if (currentPlayer === "player two") {
-        currentPlayer = "player one";
+        if (isGameOver === "tie") {
+          console.log("It's a tie");
+        } else if (isGameOver === true) {
+          console.log("You win");
+        }
+        // change player's turn
+        if (currentPlayer === "player one") {
+          currentPlayer = "player two";
+        } else if (currentPlayer === "player two") {
+          currentPlayer = "player one";
+        }
       }
     }
   }
@@ -162,17 +166,25 @@ const game = (() => {
     const play = prompt(
       "Make a move (write two numbers next to each other such as '01' or '12', the first is the line number and the second the column number",
     );
-    gameBoard.makeMove(play[0], play[1], playerId);
 
-    // write here the logic that evaluates if there's a winner
-    // then if game continues...
+    const move = gameBoard.makeMove(play[0], play[1], playerId);
+
+    return move;
   }
 
-  return { displayBoard, playGame };
+  function getCurrentPlayer() {
+    return currentPlayer;
+  }
+
+  function changeCurrentPlayer(player) {
+    currentPlayer = player;
+  }
+
+  return { displayBoard, playGame, getCurrentPlayer, changeCurrentPlayer };
 })();
 
 game.playGame();
 
 // TODO
 //
-// introduce player two; it creates now figure were it's best to control the turn flow, if in the choseMove() function or outside of it
+// inplement a while loop to continue prompting players for a move until one player wins or it's a tie
