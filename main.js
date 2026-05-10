@@ -136,25 +136,41 @@ const game = (() => {
     alert(`Hello ${playerOneName} and ${playerTwoName}!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
-    for (let i = 0; i < 11; i++) {
-      // make a move
-      const attemptMove = choseMove(currentPlayer);
+    for (let i = 0; i < 12; i++) {
+      let validMove = false;
+      let gameOver = false;
 
-      if (attemptMove) {
-        // check if game ends
-        const isGameOver = gameBoard.checkCondition(currentPlayer);
+      console.log(i);
 
-        if (isGameOver === "tie") {
-          console.log("It's a tie");
-        } else if (isGameOver === true) {
-          console.log("You win");
+      while (!validMove) {
+        // make a move
+        const attemptMove = choseMove(currentPlayer);
+
+        if (attemptMove) {
+          validMove = true;
+
+          // check if game ends
+          const isGameOver = gameBoard.checkCondition(currentPlayer);
+
+          if (isGameOver === "tie") {
+            console.log("It's a tie");
+            gameOver = true;
+          } else if (isGameOver === true) {
+            console.log("You win");
+            gameOver = true;
+          }
+
+          // change player's turn
+          if (currentPlayer === "player one") {
+            currentPlayer = "player two";
+          } else if (currentPlayer === "player two") {
+            currentPlayer = "player one";
+          }
         }
-        // change player's turn
-        if (currentPlayer === "player one") {
-          currentPlayer = "player two";
-        } else if (currentPlayer === "player two") {
-          currentPlayer = "player one";
-        }
+      }
+
+      if (gameOver) {
+        break;
       }
     }
   }
