@@ -1,5 +1,5 @@
 // Store game board and related functions
-const gameBoard = (() => {
+const GameBoard = (() => {
   let board = [
     ["", "", ""],
     ["", "", ""],
@@ -78,7 +78,7 @@ const gameBoard = (() => {
 })();
 
 // Store players and related functions
-const players = (() => {
+const Players = (() => {
   let playerOne = { name: "", id: "X" };
   let playerTwo = { name: "", id: "O" };
 
@@ -116,7 +116,7 @@ const players = (() => {
 })();
 
 // Main function that initializes game and controls game flow
-const game = (() => {
+const GameController = (() => {
   let currentPlayer = "player one";
 
   function displayBoard() {
@@ -125,7 +125,7 @@ const game = (() => {
 
   function playGame() {
     displayBoard();
-    display.renderBoard();
+    RenderUI.renderBoard();
 
     // player one prompt
     const playerOneName = prompt("Player 1, what's your name?");
@@ -133,8 +133,8 @@ const game = (() => {
     // player two prompt
     const playerTwoName = prompt("Player 2, what's your name?");
 
-    players.createPlayerOne(playerOneName);
-    players.createPlayerTwo(playerTwoName);
+    Players.createPlayerOne(playerOneName);
+    Players.createPlayerTwo(playerTwoName);
     alert(`Hello ${playerOneName} and ${playerTwoName}!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
@@ -152,7 +152,7 @@ const game = (() => {
           validMove = true;
 
           // check if game ends
-          const isGameOver = gameBoard.checkCondition(currentPlayer);
+          const isGameOver = GameBoard.checkCondition(currentPlayer);
 
           if (isGameOver === "tie") {
             console.log("It's a tie");
@@ -201,11 +201,11 @@ const game = (() => {
   return { displayBoard, playGame, getCurrentPlayer, changeCurrentPlayer };
 })();
 
-const display = (() => {
+const RenderUI = (() => {
   const board = document.querySelector(".board");
   const rows = document.querySelectorAll(".row");
   const squares = document.querySelectorAll(".square");
-  const getGameBoard = gameBoard.getBoard(); // array of 3 arrays with 3 inside
+  const getGameBoard = GameBoard.getBoard(); // array of 3 arrays with 3 inside
 
   console.log(getGameBoard);
 
@@ -223,7 +223,7 @@ const display = (() => {
   return { renderBoard };
 })();
 
-// game.playGame();
+// Game.playGame();
 
 // TODO
 //
