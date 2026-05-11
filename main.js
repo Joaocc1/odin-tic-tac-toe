@@ -8,6 +8,7 @@ const gameBoard = (() => {
 
   function getBoard() {
     console.table(board);
+    return board;
   }
 
   function makeMove(x, y, player) {
@@ -124,6 +125,7 @@ const game = (() => {
 
   function playGame() {
     displayBoard();
+    display.renderBoard();
 
     // player one prompt
     const playerOneName = prompt("Player 1, what's your name?");
@@ -199,8 +201,30 @@ const game = (() => {
   return { displayBoard, playGame, getCurrentPlayer, changeCurrentPlayer };
 })();
 
-game.playGame();
+const display = (() => {
+  const board = document.querySelector(".board");
+  const rows = document.querySelectorAll(".row");
+  const squares = document.querySelectorAll(".square");
+  const getGameBoard = gameBoard.getBoard(); // array of 3 arrays with 3 inside
+
+  console.log(getGameBoard);
+
+  function renderBoard() {
+    let numSquare = 0;
+
+    getGameBoard.forEach((row) => {
+      for (let i = 0; i < row.length; i++) {
+        squares[numSquare].textContent = row[i];
+        numSquare++;
+      }
+    });
+  }
+
+  return { renderBoard };
+})();
+
+// game.playGame();
 
 // TODO
 //
-// inplement a while loop to continue prompting players for a move until one player wins or it's a tie
+// render board on the page
