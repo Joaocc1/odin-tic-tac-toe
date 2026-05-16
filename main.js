@@ -123,50 +123,6 @@ const GameController = (() => {
     GameBoard.getBoard();
   }
 
-  function playGame() {
-    displayBoard();
-    RenderUI.renderBoard();
-
-    // for loop to prevent infinite loop while no winning condition is implemented
-    for (let i = 0; i < 12; i++) {
-      let validMove = false;
-      let gameOver = false;
-
-      console.log(i);
-
-      while (!validMove) {
-        // make a move
-        const attemptMove = choseMove(currentPlayer);
-
-        if (attemptMove) {
-          validMove = true;
-
-          // check if game ends
-          const isGameOver = GameBoard.checkCondition(currentPlayer);
-
-          if (isGameOver === "tie") {
-            console.log("It's a tie");
-            gameOver = true;
-          } else if (isGameOver === true) {
-            console.log("You win");
-            gameOver = true;
-          }
-
-          // change player's turn
-          if (currentPlayer === "player one") {
-            currentPlayer = "player two";
-          } else if (currentPlayer === "player two") {
-            currentPlayer = "player one";
-          }
-        }
-      }
-
-      if (gameOver) {
-        break;
-      }
-    }
-  }
-
   function choseMove(play) {
     console.log(play);
     let player = getCurrentPlayer();
@@ -220,7 +176,6 @@ const GameController = (() => {
 
   return {
     displayBoard,
-    playGame,
     getCurrentPlayer,
     changeCurrentPlayer,
     choseMove,
@@ -309,8 +264,6 @@ const RenderUI = (() => {
 
   return { renderBoard };
 })();
-
-// Game.playGame();
 
 // TODO
 //
