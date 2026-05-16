@@ -74,7 +74,15 @@ const GameBoard = (() => {
     }
   }
 
-  return { getBoard, makeMove, checkCondition };
+  function resetBoard() {
+    board.forEach((row) => {
+      for (let i = 0; i < row.length; i++) {
+        row[i] = "";
+      }
+    });
+  }
+
+  return { getBoard, makeMove, checkCondition, resetBoard };
 })();
 
 // Store players and related functions
@@ -106,12 +114,18 @@ const Players = (() => {
     playerTwo.name = playerName;
   }
 
+  function resetPlayers() {
+    playerOne.name = "";
+    playerTwo.name = "";
+  }
+
   return {
     createPlayerOne,
     createPlayerTwo,
     getPlayerOne,
     getPlayerTwo,
     getPlayer,
+    resetPlayers,
   };
 })();
 
@@ -124,7 +138,6 @@ const GameController = (() => {
   }
 
   function attemptMove(playerMove) {
-    // let player = getCurrentPlayer();
     let playerId = Players.getPlayer(getCurrentPlayer()).id;
     const attemptMove = GameBoard.makeMove(
       playerMove[0],
@@ -143,15 +156,24 @@ const GameController = (() => {
 
       if (isGameOver === "tie") {
         console.log("It's a tie");
+        alert("Game over: It's a tie");
+        resetGame();
       } else if (isGameOver === true) {
         console.log("You win");
-      }
-
-      // change player's turn
-      if (currentPlayer === "player one") {
-        currentPlayer = "player two";
-      } else if (currentPlayer === "player two") {
-        currentPlayer = "player one";
+        if (currentPlayer === "player one") {
+          alert(`Game over: ${Players.getPlayerOne().name} wins!`);
+          resetGame();
+        } else if (currentPlayer === "player two") {
+          alert(`Game over: ${Players.getPlayerTwo().name} wins!`);
+          resetGame();
+        }
+      } else {
+        // change player's turn
+        if (currentPlayer === "player one") {
+          currentPlayer = "player two";
+        } else if (currentPlayer === "player two") {
+          currentPlayer = "player one";
+        }
       }
     }
   }
@@ -162,6 +184,12 @@ const GameController = (() => {
 
   function changeCurrentPlayer(player) {
     currentPlayer = player;
+  }
+
+  function resetGame() {
+    GameBoard.resetBoard();
+    Players.resetPlayers();
+    currentPlayer = "player one";
   }
 
   return {
