@@ -14,7 +14,7 @@ const GameBoard = (() => {
   function makeMove(x, y, player) {
     if (board[x][y] === "") {
       board[x][y] = player;
-      // console.clear();
+      console.clear();
       getBoard();
       return true;
     } else {
@@ -123,22 +123,18 @@ const GameController = (() => {
     GameBoard.getBoard();
   }
 
-  function choseMove(play) {
-    console.log(play);
-    let player = getCurrentPlayer();
-    let playerId = Players.getPlayer(player).id;
-    console.log(playerId);
-
-    const move = GameBoard.makeMove(play[0], play[1], playerId);
-
-    return move;
-  }
-
   function attemptMove(playerMove) {
     let gameOver = false;
+    let player = getCurrentPlayer();
+    let playerId = Players.getPlayer(player).id;
+    const attemptMove = GameBoard.makeMove(
+      playerMove[0],
+      playerMove[1],
+      playerId,
+    );
 
-    // make a move
-    const attemptMove = choseMove(playerMove);
+    console.log(playerId);
+    console.log(playerMove);
 
     // only if attempt move is successful checks for a win and changes current player
     if (attemptMove) {
@@ -174,7 +170,6 @@ const GameController = (() => {
     displayBoard,
     getCurrentPlayer,
     changeCurrentPlayer,
-    choseMove,
     attemptMove,
   };
 })();
@@ -263,4 +258,4 @@ const RenderUI = (() => {
 
 // TODO
 //
-// refactor players function to be a regular function factory because it will be reused as a factory that will produce multiple objects
+// within function attemptMove create logic to render some way to tell the game is over, create this logic outside of this function but call it here
