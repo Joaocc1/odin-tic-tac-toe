@@ -124,9 +124,8 @@ const GameController = (() => {
   }
 
   function attemptMove(playerMove) {
-    let gameOver = false;
-    let player = getCurrentPlayer();
-    let playerId = Players.getPlayer(player).id;
+    // let player = getCurrentPlayer();
+    let playerId = Players.getPlayer(getCurrentPlayer()).id;
     const attemptMove = GameBoard.makeMove(
       playerMove[0],
       playerMove[1],
@@ -140,13 +139,12 @@ const GameController = (() => {
     if (attemptMove) {
       // check if game ends
       const isGameOver = GameBoard.checkCondition(currentPlayer);
+      console.log(`This the return of isGameOver fn: ${isGameOver}`);
 
       if (isGameOver === "tie") {
         console.log("It's a tie");
-        gameOver = true;
       } else if (isGameOver === true) {
         console.log("You win");
-        gameOver = true;
       }
 
       // change player's turn
