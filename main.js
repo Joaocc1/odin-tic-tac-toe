@@ -14,7 +14,7 @@ const GameBoard = (() => {
   function makeMove(x, y, player) {
     if (board[x][y] === "") {
       board[x][y] = player;
-      console.clear();
+      // console.clear();
       getBoard();
       return true;
     } else {
@@ -120,22 +120,12 @@ const GameController = (() => {
   let currentPlayer = "player one";
 
   function displayBoard() {
-    gameBoard.getBoard();
+    GameBoard.getBoard();
   }
 
   function playGame() {
     displayBoard();
     RenderUI.renderBoard();
-
-    // player one prompt
-    const playerOneName = prompt("Player 1, what's your name?");
-
-    // player two prompt
-    const playerTwoName = prompt("Player 2, what's your name?");
-
-    Players.createPlayerOne(playerOneName);
-    Players.createPlayerTwo(playerTwoName);
-    alert(`Hello ${playerOneName} and ${playerTwoName}!`);
 
     // for loop to prevent infinite loop while no winning condition is implemented
     for (let i = 0; i < 12; i++) {
@@ -177,17 +167,47 @@ const GameController = (() => {
     }
   }
 
-  function choseMove(player) {
-    let playerId = players.getPlayer(player).id;
+  function choseMove(play) {
+    console.log(play);
+    let player = getCurrentPlayer();
+    let playerId = Players.getPlayer(player).id;
     console.log(playerId);
 
-    const play = prompt(
-      "Make a move (write two numbers next to each other such as '01' or '12', the first is the line number and the second the column number",
-    );
-
-    const move = gameBoard.makeMove(play[0], play[1], playerId);
+    const move = GameBoard.makeMove(play[0], play[1], playerId);
 
     return move;
+  }
+
+  function attemptMove(playerMove) {
+    let validMove = false;
+    let gameOver = false;
+
+    while (!validMove) {
+      // make a move
+      const attemptMove = choseMove(playerMove);
+
+      if (attemptMove) {
+        validMove = true;
+
+        // check if game ends
+        const isGameOver = GameBoard.checkCondition(currentPlayer);
+
+        if (isGameOver === "tie") {
+          console.log("It's a tie");
+          gameOver = true;
+        } else if (isGameOver === true) {
+          console.log("You win");
+          gameOver = true;
+        }
+
+        // change player's turn
+        if (currentPlayer === "player one") {
+          currentPlayer = "player two";
+        } else if (currentPlayer === "player two") {
+          currentPlayer = "player one";
+        }
+      }
+    }
   }
 
   function getCurrentPlayer() {
@@ -198,7 +218,14 @@ const GameController = (() => {
     currentPlayer = player;
   }
 
-  return { displayBoard, playGame, getCurrentPlayer, changeCurrentPlayer };
+  return {
+    displayBoard,
+    playGame,
+    getCurrentPlayer,
+    changeCurrentPlayer,
+    choseMove,
+    attemptMove,
+  };
 })();
 
 const RenderUI = (() => {
@@ -220,6 +247,66 @@ const RenderUI = (() => {
     });
   }
 
+  function handleBoard(e) {
+    console.log(e.target.className);
+
+    const squareClicked = e.target.className;
+    let playerMove = "";
+
+    switch (squareClicked) {
+      case "square one":
+        playerMove = "00";
+        break;
+      case "square two":
+        playerMove = "01";
+        break;
+      case "square three":
+        playerMove = "02";
+        break;
+      case "square four":
+        playerMove = "10";
+        break;
+      case "square five":
+        playerMove = "11";
+        break;
+      case "square six":
+        playerMove = "12";
+        break;
+      case "square seven":
+        playerMove = "20";
+        break;
+      case "square eight":
+        playerMove = "21";
+        break;
+      case "square nine":
+        playerMove = "22";
+        break;
+      default:
+        playerMove = "";
+        break;
+    }
+
+    GameController.attemptMove(playerMove);
+
+    renderBoard();
+  }
+
+  // ------- Begin game --------------
+
+  renderBoard();
+
+  // player one prompt
+  const playerOneName = prompt("Player 1, what's your name?");
+
+  // player two prompt
+  const playerTwoName = prompt("Player 2, what's your name?");
+
+  Players.createPlayerOne(playerOneName);
+  Players.createPlayerTwo(playerTwoName);
+  alert(`Hello ${playerOneName} and ${playerTwoName}!`);
+
+  board.addEventListener("click", handleBoard);
+
   return { renderBoard };
 })();
 
@@ -227,4 +314,4 @@ const RenderUI = (() => {
 
 // TODO
 //
-// render board on the page
+// refactor players function to be a regular function factory because it will be reused as a factory that will produce multiple objects
