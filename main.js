@@ -135,33 +135,29 @@ const GameController = (() => {
   }
 
   function attemptMove(playerMove) {
-    let validMove = false;
     let gameOver = false;
 
-    while (!validMove) {
-      // make a move
-      const attemptMove = choseMove(playerMove);
+    // make a move
+    const attemptMove = choseMove(playerMove);
 
-      if (attemptMove) {
-        validMove = true;
+    // only if attempt move is successful checks for a win and changes current player
+    if (attemptMove) {
+      // check if game ends
+      const isGameOver = GameBoard.checkCondition(currentPlayer);
 
-        // check if game ends
-        const isGameOver = GameBoard.checkCondition(currentPlayer);
+      if (isGameOver === "tie") {
+        console.log("It's a tie");
+        gameOver = true;
+      } else if (isGameOver === true) {
+        console.log("You win");
+        gameOver = true;
+      }
 
-        if (isGameOver === "tie") {
-          console.log("It's a tie");
-          gameOver = true;
-        } else if (isGameOver === true) {
-          console.log("You win");
-          gameOver = true;
-        }
-
-        // change player's turn
-        if (currentPlayer === "player one") {
-          currentPlayer = "player two";
-        } else if (currentPlayer === "player two") {
-          currentPlayer = "player one";
-        }
+      // change player's turn
+      if (currentPlayer === "player one") {
+        currentPlayer = "player two";
+      } else if (currentPlayer === "player two") {
+        currentPlayer = "player one";
       }
     }
   }
