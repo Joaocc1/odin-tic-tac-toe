@@ -152,7 +152,6 @@ const GameController = (() => {
     if (attemptMove) {
       // check if game ends
       const isGameOver = GameBoard.checkCondition(currentPlayer);
-      console.log(`This the return of isGameOver fn: ${isGameOver}`);
 
       if (isGameOver === "tie") {
         console.log("It's a tie");
@@ -205,13 +204,21 @@ const GameController = (() => {
 })();
 
 const RenderUI = (() => {
+  const msgOutput = document.querySelector(".msg-output");
   const board = document.querySelector(".board");
   const squares = document.querySelectorAll(".square");
   const getGameBoard = GameBoard.getBoard(); // array of 3 arrays with 3 inside
   const newGameBtn = document.querySelector(".new-game-btn");
   const resetGameBtn = document.querySelector(".reset-btn");
+  const dialog = document.querySelector("dialog");
+  const cancelDialogBtn = document.querySelector(".cancel-btn");
+  const submitDialogBtn = document.querySelector(".submit-btn");
 
   console.log(getGameBoard);
+
+  function updateMsgOutput(message) {
+    msgOutput.textContent = message;
+  }
 
   function renderBoard() {
     let numSquare = 0;
@@ -265,10 +272,14 @@ const RenderUI = (() => {
 
     GameController.attemptMove(playerMove);
 
+    RenderUI.updateMsgOutput(
+      `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
+    );
     renderBoard();
   }
 
   newGameBtn.addEventListener("click", () => {
+    dialog.showModal();
     renderBoard();
     board.addEventListener("click", handleBoard);
   });
@@ -277,5 +288,31 @@ const RenderUI = (() => {
     renderBoard();
   });
 
-  return { renderBoard };
+  submitDialogBtn.addEventListener("click", (e) => {
+    const playerOneName = document.querySelector(".player-one").value;
+    const playerTwoName = document.querySelector(".player-two").value;
+
+    GameController.resetGame();
+    renderBoard();
+
+    Players.createPlayerOne(playerOneName);
+    Players.createPlayerTwo(playerTwoName);
+
+    updateMsgOutput(
+      `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
+    );
+
+    e.preventDefault();
+    dialog.close();
+  });
+
+  cancelDialogBtn.addEventListener("click", () => {
+    dialog.close();
+  });
+
+  return { renderBoard, updateMsgOutput };
 })();
+
+// TODO
+//
+// Update UI with information, show game board and output message

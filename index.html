@@ -9,6 +9,10 @@
   </head>
   <body>
     <div class="game-container">
+      <div class="output">
+        <p class="msg-output"></p>
+      </div>
+
       <div class="board">
         <div class="row">
           <div class="square one"></div>
@@ -32,5 +36,16 @@
         <button class="reset-btn">Reset</button>
       </div>
     </div>
+
+    <dialog id="setup-game">
+      <form action="">
+        <label for="player-one">Player one's name</label>
+        <input class="player-one" name="player-one" type="text" />
+        <label for="player-two">Player two's name</label>
+        <input class="player-two" name="player-two" type="text" />
+        <button class="submit-btn">Begin game</button>
+        <button class="cancel-btn">Cancel</button>
+      </form>
+    </dialog>
   </body>
 </html>

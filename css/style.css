@@ -12,6 +12,10 @@ body {
   padding: 4rem;
 }
 
+.msg-output {
+  color: green;
+}
+
 .board {
   border: 1px black solid;
   width: fit-content;
