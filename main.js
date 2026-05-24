@@ -186,6 +186,8 @@ const GameController = (() => {
     currentPlayer = player;
   }
 
+  function newGame() {}
+
   function resetGame() {
     GameBoard.resetBoard();
     Players.resetPlayers();
@@ -197,14 +199,17 @@ const GameController = (() => {
     getCurrentPlayer,
     changeCurrentPlayer,
     attemptMove,
+    newGame,
+    resetGame,
   };
 })();
 
 const RenderUI = (() => {
   const board = document.querySelector(".board");
-  const rows = document.querySelectorAll(".row");
   const squares = document.querySelectorAll(".square");
   const getGameBoard = GameBoard.getBoard(); // array of 3 arrays with 3 inside
+  const newGameBtn = document.querySelector(".new-game-btn");
+  const resetGameBtn = document.querySelector(".reset-btn");
 
   console.log(getGameBoard);
 
@@ -263,15 +268,14 @@ const RenderUI = (() => {
     renderBoard();
   }
 
-  // ------- Begin game --------------
-
-  renderBoard();
-
-  board.addEventListener("click", handleBoard);
+  newGameBtn.addEventListener("click", () => {
+    renderBoard();
+    board.addEventListener("click", handleBoard);
+  });
+  resetGameBtn.addEventListener("click", () => {
+    GameController.resetGame();
+    renderBoard();
+  });
 
   return { renderBoard };
 })();
-
-// TODO
-//
-// within function attemptMove create logic to render some way to tell the game is over, create this logic outside of this function but call it here
