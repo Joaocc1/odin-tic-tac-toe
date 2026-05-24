@@ -267,16 +267,6 @@ const RenderUI = (() => {
 
   renderBoard();
 
-  // player one prompt
-  const playerOneName = prompt("Player 1, what's your name?");
-
-  // player two prompt
-  const playerTwoName = prompt("Player 2, what's your name?");
-
-  Players.createPlayerOne(playerOneName);
-  Players.createPlayerTwo(playerTwoName);
-  alert(`Hello ${playerOneName} and ${playerTwoName}!`);
-
   board.addEventListener("click", handleBoard);
 
   return { renderBoard };
