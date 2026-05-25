@@ -315,4 +315,4 @@ const RenderUI = (() => {
 
 // TODO
 //
-// Update UI with information, show game board and output message
+// Update UI with information, show game board and output message. Look into attemptMove() function to maybe return a value and use that returned value to output as the message
