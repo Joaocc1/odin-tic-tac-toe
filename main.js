@@ -155,16 +155,13 @@ const GameController = (() => {
 
       if (isGameOver === "tie") {
         console.log("It's a tie");
-        alert("Game over: It's a tie");
-        resetGame();
+        return `It's a tie`;
       } else if (isGameOver === true) {
         console.log("You win");
         if (currentPlayer === "player one") {
-          alert(`Game over: ${Players.getPlayerOne().name} wins!`);
-          resetGame();
+          return `${Players.getPlayer(GameController.getCurrentPlayer()).name} wins!`;
         } else if (currentPlayer === "player two") {
-          alert(`Game over: ${Players.getPlayerTwo().name} wins!`);
-          resetGame();
+          return `${Players.getPlayer(GameController.getCurrentPlayer()).name} wins!`;
         }
       } else {
         // change player's turn
@@ -173,6 +170,7 @@ const GameController = (() => {
         } else if (currentPlayer === "player two") {
           currentPlayer = "player one";
         }
+        return `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`;
       }
     }
   }
@@ -270,11 +268,9 @@ const RenderUI = (() => {
         break;
     }
 
-    GameController.attemptMove(playerMove);
+    const resultMsg = GameController.attemptMove(playerMove);
 
-    RenderUI.updateMsgOutput(
-      `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
-    );
+    RenderUI.updateMsgOutput(resultMsg);
     renderBoard();
   }
 
@@ -315,4 +311,4 @@ const RenderUI = (() => {
 
 // TODO
 //
-// Update UI with information, show game board and output message. Look into attemptMove() function to maybe return a value and use that returned value to output as the message
+// fix so the game also resets at the end and/or no new moves are possible
