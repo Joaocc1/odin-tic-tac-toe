@@ -2,6 +2,7 @@
   --primary-clr: #2b2d42;
   --secondary-clr: #e86a92;
   --tertiary-clr: #329f5b;
+  --txt-clr: #000000;
   --accent-clr-one: #f7f7f9;
   --accent-clr-two: #0c8346;
 }
@@ -30,13 +31,21 @@ body {
 }
 
 .board {
-  background-color: var(--tertiary-clr);
-  border: 5px black solid;
+  background-color: var(--accent-clr-one);
+  border: 5px var(--txt-clr) solid;
   width: fit-content;
 }
 
 .controls {
   padding: 4rem;
+}
+
+.controls button {
+  background-color: var(--tertiary-clr);
+  padding: 0.75rem;
+  outline: none;
+  border: 1px var(--txt-clr) solid;
+  color: var(--accent-clr-one);
 }
 
 .row {
@@ -49,8 +58,8 @@ body {
   align-items: center;
   font-size: 2.5rem;
   font-weight: bold;
-  color: var(--accent-clr-one);
+  color: var(--txt-clr);
   width: 100px;
   height: 100px;
-  border: 2px black solid;
+  border: 2px var(--txt-clr) solid;
 }
