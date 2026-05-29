@@ -19,7 +19,6 @@ const GameBoard = (() => {
       return true;
     } else {
       console.log("Not a valid move");
-      alert("Not a valid move");
       return false;
     }
   }
@@ -153,25 +152,20 @@ const GameController = (() => {
       // check if game ends
       const isGameOver = GameBoard.checkCondition(currentPlayer);
 
-      if (isGameOver === "tie") {
-        console.log("It's a tie");
-        return `It's a tie`;
-      } else if (isGameOver === true) {
-        console.log("You win");
-        if (currentPlayer === "player one") {
-          return `${Players.getPlayer(GameController.getCurrentPlayer()).name} wins!`;
-        } else if (currentPlayer === "player two") {
-          return `${Players.getPlayer(GameController.getCurrentPlayer()).name} wins!`;
-        }
-      } else {
+      if (isGameOver === "tie" || isGameOver === true) {
+        return isGameOver;
+      } else if (isGameOver === false) {
         // change player's turn
         if (currentPlayer === "player one") {
           currentPlayer = "player two";
+          return isGameOver;
         } else if (currentPlayer === "player two") {
           currentPlayer = "player one";
+          return isGameOver;
         }
-        return `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`;
       }
+    } else if (!attemptMove) {
+      return "not a valid move";
     }
   }
 
@@ -187,7 +181,6 @@ const GameController = (() => {
 
   function resetGame() {
     GameBoard.resetBoard();
-    Players.resetPlayers();
     currentPlayer = "player one";
   }
 
@@ -268,9 +261,30 @@ const RenderUI = (() => {
         break;
     }
 
-    const resultMsg = GameController.attemptMove(playerMove);
+    const result = GameController.attemptMove(playerMove);
+    let outputMsg = "";
 
-    RenderUI.updateMsgOutput(resultMsg);
+    switch (result) {
+      case "not a valid move":
+        outputMsg = `Not a valid move! It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`;
+        break;
+      case "tie":
+        outputMsg = "It's a tie!";
+        board.removeEventListener("click", handleBoard);
+        break;
+      case true:
+        outputMsg = `${Players.getPlayer(GameController.getCurrentPlayer()).name}'s wins!`;
+        board.removeEventListener("click", handleBoard);
+        break;
+      case false:
+        outputMsg = `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`;
+        break;
+
+      default:
+        break;
+    }
+
+    updateMsgOutput(outputMsg);
     renderBoard();
   }
 
@@ -281,6 +295,12 @@ const RenderUI = (() => {
   });
   resetGameBtn.addEventListener("click", () => {
     GameController.resetGame();
+    updateMsgOutput(
+      `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
+    );
+    // remove event listener and add it again to account for both cases where this event listener will be active or has been removed
+    board.removeEventListener("click", handleBoard);
+    board.addEventListener("click", handleBoard);
     renderBoard();
   });
 
@@ -289,6 +309,7 @@ const RenderUI = (() => {
     const playerTwoName = document.querySelector(".player-two").value;
 
     GameController.resetGame();
+    Players.resetPlayers();
     renderBoard();
 
     Players.createPlayerOne(playerOneName);
