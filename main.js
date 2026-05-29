@@ -273,7 +273,7 @@ const RenderUI = (() => {
         board.removeEventListener("click", handleBoard);
         break;
       case true:
-        outputMsg = `${Players.getPlayer(GameController.getCurrentPlayer()).name}'s wins!`;
+        outputMsg = `${Players.getPlayer(GameController.getCurrentPlayer()).name} wins!`;
         board.removeEventListener("click", handleBoard);
         break;
       case false:
