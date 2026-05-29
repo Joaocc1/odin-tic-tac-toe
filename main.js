@@ -332,4 +332,4 @@ const RenderUI = (() => {
 
 // TODO
 //
-// fix so the game also resets at the end and/or no new moves are possible
+// clean up the ui and make it look better
