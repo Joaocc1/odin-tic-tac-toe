@@ -25,7 +25,8 @@ body {
 }
 
 .msg-output {
-  color: green;
+  font-size: 2rem;
+  color: var(--secondary-clr);
 }
 
 .board {
