@@ -30,7 +30,7 @@ body {
 
 .board {
   background-color: var(--tertiary-clr);
-  border: 1px black solid;
+  border: 5px black solid;
   width: fit-content;
 }
 
@@ -51,5 +51,5 @@ body {
   color: var(--accent-clr-one);
   width: 100px;
   height: 100px;
-  border: 1px black solid;
+  border: 2px black solid;
 }
