@@ -7,7 +7,6 @@ const GameBoard = (() => {
   ];
 
   function getBoard() {
-    console.table(board);
     return board;
   }
 
@@ -63,8 +62,6 @@ const GameBoard = (() => {
         return true;
       }
     }
-
-    console.log(isBoardFull);
 
     if (isBoardFull === 3) {
       return "tie";
@@ -144,9 +141,6 @@ const GameController = (() => {
       playerId,
     );
 
-    console.log(playerId);
-    console.log(playerMove);
-
     // only if attempt move is successful checks for a win and changes current player
     if (attemptMove) {
       // check if game ends
@@ -205,8 +199,6 @@ const RenderUI = (() => {
   const cancelDialogBtn = document.querySelector(".cancel-btn");
   const submitDialogBtn = document.querySelector(".submit-btn");
 
-  console.log(getGameBoard);
-
   function updateMsgOutput(message) {
     msgOutput.textContent = message;
   }
@@ -223,8 +215,6 @@ const RenderUI = (() => {
   }
 
   function handleBoard(e) {
-    console.log(e.target.className);
-
     const squareClicked = e.target.className;
     let playerMove = "";
 
