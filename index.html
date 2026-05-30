@@ -38,13 +38,20 @@
     </div>
 
     <dialog id="setup-game">
-      <form action="">
-        <label for="player-one">Player one's name</label>
-        <input class="player-one" name="player-one" type="text" />
-        <label for="player-two">Player two's name</label>
-        <input class="player-two" name="player-two" type="text" />
-        <button class="submit-btn">Begin game</button>
-        <button class="cancel-btn">Cancel</button>
+      <div class="dialog-header">New Game</div>
+      <form class="setup-form" action="">
+        <div>
+          <label for="player-one">Player one's name</label>
+          <input class="player-one" name="player-one" type="text" />
+        </div>
+        <div>
+          <label for="player-two">Player two's name</label>
+          <input class="player-two" name="player-two" type="text" />
+        </div>
+        <div>
+          <button class="btn submit-btn">Begin game</button>
+          <button class="btn cancel-btn">Cancel</button>
+        </div>
       </form>
     </dialog>
   </body>
