@@ -331,7 +331,3 @@ const RenderUI = (() => {
 
   return { renderBoard, updateMsgOutput };
 })();
-
-// TODO
-//
-// clean up the ui and make it look better
