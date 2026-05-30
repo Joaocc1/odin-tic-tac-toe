@@ -294,14 +294,16 @@ const RenderUI = (() => {
     board.addEventListener("click", handleBoard);
   });
   resetGameBtn.addEventListener("click", () => {
-    GameController.resetGame();
-    updateMsgOutput(
-      `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
-    );
-    // remove event listener and add it again to account for both cases where this event listener will be active or has been removed
-    board.removeEventListener("click", handleBoard);
-    board.addEventListener("click", handleBoard);
-    renderBoard();
+    if (Players.getPlayerOne().name !== "") {
+      GameController.resetGame();
+      updateMsgOutput(
+        `It's ${Players.getPlayer(GameController.getCurrentPlayer()).name}'s turn`,
+      );
+      // remove event listener and add it again to account for both cases where this event listener will be active or has been removed
+      board.removeEventListener("click", handleBoard);
+      board.addEventListener("click", handleBoard);
+      renderBoard();
+    }
   });
 
   submitDialogBtn.addEventListener("click", (e) => {
